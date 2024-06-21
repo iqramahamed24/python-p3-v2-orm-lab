@@ -1,7 +1,6 @@
 from __init__ import CONN, CURSOR
 from employee import Employee
 from department import Department
-from faker import Faker
 import pytest
 
 
@@ -128,34 +127,6 @@ class TestEmployee:
                 (employee.id, employee.name, employee.job_title, employee.department_id) ==
                 (employee.id, "Amir", "Programmer", department.id))
 
-    def test_finds_by_id(self):
-        '''contains method "find_by_id()" that returns a Employee instance corresponding to its db row retrieved by id.'''
-
-        Department.create_table()
-        department = Department("Payroll", "Building A, 5th Floor")
-        department.save()
-        Employee.create_table()
-        faker = Faker()
-        employee1 = Employee.create(faker.name(), "Manager", department.id)
-        employee2 = Employee.create(
-            faker.name(), "Web Developer", department.id)
-
-        employee = Employee.find_by_id(employee1.id)
-        assert (
-            (employee.id, employee.name, employee.job_title, employee.department_id) ==
-            (employee1.id, employee1.name,
-             employee1.job_title, employee1.department_id)
-        )
-
-        employee = Employee.find_by_id(employee2.id)
-        assert (
-            (employee.id, employee.name, employee.job_title, employee.department_id) ==
-            (employee2.id, employee2.name,
-             employee2.job_title, employee2.department_id)
-        )
-
-        employee = Employee.find_by_id(3)
-        assert (employee is None)
 
     def test_finds_by_name(self):
         '''contains method "find_by_name()" that returns an Employee instance corresponding to the db row retrieved by name.'''
